@@ -48,4 +48,7 @@ mongoose.connect(process.env.MONGO_URL)
   console.error('MongoDB connection error:', err);
 });
 
-module.exports = app;
+module.exports = (req, res) => {
+  app(req, res);
+};
+
