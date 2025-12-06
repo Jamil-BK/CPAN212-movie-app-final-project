@@ -4,11 +4,13 @@ const mongoose = require('mongoose');
 const movieRoutes = require('./routes/movies');
 const authRoutes = require('./routes/auth');
 const methodOverride = require('method-override');
+const path = require('path');
+const serverless = require('serverless-http');
 const app = express();
 
 // this is the EJS template
 app.set('view engine', 'ejs');
-app.set('views', 'views');
+app.set('views', path.join(__dirname, 'views'));
 
 // the middleware
 app.use(express.urlencoded({ extended: true }));
@@ -40,8 +42,6 @@ app.get('/', (req, res) => {
 
 // added my own mongodb for the sake of simplicity; feel free to change it. user/pass are in the link
 //mongoose.connect('mongodb+srv://dbUser:Password123@cluster0.t4bu3fl.mongodb.net/?appName=Cluster0')
-const serverless = require('serverless-http');
-
 mongoose.connect(process.env.MONGO_URL)
 .then(() => {
   console.log('Connected to MongoDB');
@@ -51,4 +51,3 @@ mongoose.connect(process.env.MONGO_URL)
 });
 
 module.exports = serverless(app);
-
