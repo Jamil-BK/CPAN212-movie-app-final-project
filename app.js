@@ -40,6 +40,8 @@ app.get('/', (req, res) => {
 
 // added my own mongodb for the sake of simplicity; feel free to change it. user/pass are in the link
 //mongoose.connect('mongodb+srv://dbUser:Password123@cluster0.t4bu3fl.mongodb.net/?appName=Cluster0')
+const serverless = require('serverless-http');
+
 mongoose.connect(process.env.MONGO_URL)
 .then(() => {
   console.log('Connected to MongoDB');
@@ -48,7 +50,5 @@ mongoose.connect(process.env.MONGO_URL)
   console.error('MongoDB connection error:', err);
 });
 
-module.exports = (req, res) => {
-  app(req, res);
-};
+module.exports = serverless(app);
 
